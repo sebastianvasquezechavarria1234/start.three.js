@@ -2,72 +2,85 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
-const camera = new THREE.OrthographicCamera(-5, 5, 5, -5, 0.1, 100);
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x000010);
+renderer.setClearColor(0x111111);
 document.body.appendChild(renderer.domElement);
 
-function createStar() {
-    const group = new THREE.Group();
+const planeGeometry = new THREE.PlaneGeometry(8, 8);
+const planeMaterial = new THREE.MeshBasicMaterial({ color: 0x222222, side: THREE.DoubleSide });
+const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+scene.add(plane);
 
-    const rayShape = new THREE.Shape();
-    rayShape.moveTo(0, 0);
-    rayShape.lineTo(-0.08, 0.6);
-    rayShape.lineTo(0, 2.5);
-    rayShape.lineTo(0.08, 0.6);
-    rayShape.closePath();
+const starGroup = new THREE.Group();
 
-    const rayMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 });
-
-    const angles = [0, Math.PI / 2, Math.PI, 3 * Math.PI / 2];
-    angles.forEach(angle => {
-        const ray = new THREE.Mesh(new THREE.ShapeGeometry(rayShape), rayMaterial);
-        ray.rotation.z = angle;
-        group.add(ray);
-    });
-
-    const diagonalRayShape = new THREE.Shape();
-    diagonalRayShape.moveTo(0, 0);
-    diagonalRayShape.lineTo(-0.04, 0.4);
-    diagonalRayShape.lineTo(0, 1.8);
-    diagonalRayShape.lineTo(0.04, 0.4);
-    diagonalRayShape.closePath();
-
-    const diagonalRayMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.7 });
-
-    const diagonalAngles = [Math.PI / 4, 3 * Math.PI / 4, 5 * Math.PI / 4, 7 * Math.PI / 4];
-    diagonalAngles.forEach(angle => {
-        const ray = new THREE.Mesh(new THREE.ShapeGeometry(diagonalRayShape), diagonalRayMaterial);
-        ray.rotation.z = angle;
-        group.add(ray);
-    });
-
-    const coreGeometry = new THREE.CircleGeometry(0.5, 32);
-    const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
-    const core = new THREE.Mesh(coreGeometry, coreMaterial);
-    group.add(core);
-
-    const innerGlowGeometry = new THREE.CircleGeometry(0.8, 32);
-    const innerGlowMaterial = new THREE.MeshBasicMaterial({ color: 0xffffcc, transparent: true, opacity: 0.6 });
-    const innerGlow = new THREE.Mesh(innerGlowGeometry, innerGlowMaterial);
-    group.add(innerGlow);
-
-    const outerGlowGeometry = new THREE.CircleGeometry(1.5, 32);
-    const outerGlowMaterial = new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.2 });
-    const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
-    group.add(outerGlow);
-
-    const haloGeometry = new THREE.RingGeometry(0.5, 2.0, 32);
-    const haloMaterial = new THREE.MeshBasicMaterial({ color: 0xffaa00, transparent: true, opacity: 0.15, side: THREE.DoubleSide });
-    const halo = new THREE.Mesh(haloGeometry, haloMaterial);
-    group.add(halo);
-
-    return group;
+function createRay(length, width) {
+    const shape = new THREE.Shape();
+    shape.moveTo(0, 0);
+    shape.lineTo(-width, length * 0.3);
+    shape.lineTo(0, length);
+    shape.lineTo(width, length * 0.3);
+    shape.closePath();
+    return new THREE.ShapeGeometry(shape);
 }
 
-const star = createStar();
-scene.add(star);
+const rayMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.9 });
+
+const ray1 = new THREE.Mesh(createRay(2.5, 0.1), rayMaterial);
+ray1.position.y = 0;
+starGroup.add(ray1);
+
+const ray2 = new THREE.Mesh(createRay(2.5, 0.1), rayMaterial);
+ray2.rotation.z = Math.PI;
+ray2.position.y = 0;
+starGroup.add(ray2);
+
+const ray3 = new THREE.Mesh(createRay(2.5, 0.1), rayMaterial);
+ray3.rotation.z = Math.PI / 2;
+ray3.position.x = 0;
+starGroup.add(ray3);
+
+const ray4 = new THREE.Mesh(createRay(2.5, 0.1), rayMaterial);
+ray4.rotation.z = -Math.PI / 2;
+ray4.position.x = 0;
+starGroup.add(ray4);
+
+const smallRayMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, transparent: true, opacity: 0.6 });
+
+const dr1 = new THREE.Mesh(createRay(1.5, 0.05), smallRayMaterial);
+dr1.rotation.z = Math.PI / 4;
+starGroup.add(dr1);
+
+const dr2 = new THREE.Mesh(createRay(1.5, 0.05), smallRayMaterial);
+dr2.rotation.z = 3 * Math.PI / 4;
+starGroup.add(dr2);
+
+const dr3 = new THREE.Mesh(createRay(1.5, 0.05), smallRayMaterial);
+dr3.rotation.z = 5 * Math.PI / 4;
+starGroup.add(dr3);
+
+const dr4 = new THREE.Mesh(createRay(1.5, 0.05), smallRayMaterial);
+dr4.rotation.z = 7 * Math.PI / 4;
+starGroup.add(dr4);
+
+const coreGeometry = new THREE.CircleGeometry(0.4, 32);
+const coreMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff });
+const core = new THREE.Mesh(coreGeometry, coreMaterial);
+starGroup.add(core);
+
+const glowGeometry = new THREE.CircleGeometry(0.7, 32);
+const glowMaterial = new THREE.MeshBasicMaterial({ color: 0xffffcc, transparent: true, opacity: 0.5 });
+const glow = new THREE.Mesh(glowGeometry, glowMaterial);
+starGroup.add(glow);
+
+const outerGlowGeometry = new THREE.CircleGeometry(1.2, 32);
+const outerGlowMaterial = new THREE.MeshBasicMaterial({ color: 0xffd700, transparent: true, opacity: 0.2 });
+const outerGlow = new THREE.Mesh(outerGlowGeometry, outerGlowMaterial);
+starGroup.add(outerGlow);
+
+starGroup.position.z = 0.01;
+scene.add(starGroup);
 
 camera.position.z = 10;
 
@@ -81,12 +94,12 @@ function animate() {
     time += 0.02;
 
     const pulse = Math.sin(time * 2) * 0.1 + 1.0;
-    star.children[8].scale.set(pulse, pulse, 1);
+    glow.scale.set(pulse, pulse, 1);
 
     const rayPulse = Math.sin(time * 3) * 0.15 + 0.85;
-    star.children.forEach((child, i) => {
+    starGroup.children.forEach((child, i) => {
         if (i < 8) {
-            child.material.opacity = (i < 4 ? 0.9 : 0.7) * rayPulse;
+            child.material.opacity = (i < 4 ? 0.9 : 0.6) * rayPulse;
         }
     });
 
@@ -97,11 +110,7 @@ function animate() {
 animate();
 
 window.addEventListener('resize', () => {
-    const aspect = window.innerWidth / window.innerHeight;
-    camera.left = -5 * aspect;
-    camera.right = 5 * aspect;
-    camera.top = 5;
-    camera.bottom = -5;
+    camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
     renderer.setSize(window.innerWidth, window.innerHeight);
 });
