@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 
 const scene = new THREE.Scene();
 const camera = new THREE.OrthographicCamera(-5, 5, 5, -5, 0.1, 100);
@@ -70,6 +71,9 @@ scene.add(star);
 
 camera.position.z = 10;
 
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+
 let time = 0;
 
 function animate() {
@@ -87,6 +91,7 @@ function animate() {
     });
 
     renderer.render(scene, camera);
+    controls.update();
 }
 
 animate();
