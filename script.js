@@ -74,11 +74,6 @@ uniform vec2 uResolution;
 varying vec4 vRandom;
 varying float vSize;
 
-vec3 hsv2rgb(vec3 hsv) {
-  hsv.yz = clamp(hsv.yz, 0.0, 1.0);
-  return hsv.z * (0.63 * hsv.y * (cos(twopi * (hsv.x + vec3(0.0, 2.0/3.0, 1.0/3.0))) - 1.0) + 1.0);
-}
-
 void main() {
   vec2 center = gl_PointCoord - 0.5;
   float dist = length(center);
@@ -90,25 +85,36 @@ void main() {
   float distd1 = distance(centerDiag * vec2(10.0, 0.6), vec2(0.0));
   float distd2 = distance(centerDiag * vec2(0.6, 10.0), vec2(0.0));
 
-  float starIntensity = 1.0/(dist * 180.0 + 0.01)
-                      + 0.4/(disth * 180.0 + 0.008)
-                      + 0.4/(distv * 180.0 + 0.008)
-                      + 0.25/(distd1 * 180.0 + 0.008)
-                      + 0.25/(distd2 * 180.0 + 0.008);
+  float starIntensity = 1.0/(dist * 200.0 + 0.02)
+                      + 0.5/(disth * 250.0 + 0.005)
+                      + 0.5/(distv * 250.0 + 0.005)
+                      + 0.35/(distd1 * 250.0 + 0.005)
+                      + 0.35/(distd2 * 250.0 + 0.005);
 
-  starIntensity = pow(starIntensity, 0.6) * 0.8;
+  starIntensity = pow(starIntensity, 0.5) * 0.8;
 
-  float hue = mix(0.55, 0.75, vRandom.x) + 0.02 * uTime;
-  float saturation = mix(0.3, 0.7, vRandom.y);
+  float rand = vRandom.x;
+  vec3 baseColor;
+  if (rand < 0.45) {
+    baseColor = vec3(1.0, 1.0, 1.0);
+  } else if (rand < 0.70) {
+    baseColor = vec3(1.0, 0.96, 0.84);
+  } else if (rand < 0.85) {
+    baseColor = vec3(0.66, 0.84, 1.0);
+  } else if (rand < 0.95) {
+    baseColor = vec3(1.0, 0.71, 0.42);
+  } else {
+    baseColor = vec3(1.0, 0.48, 0.48);
+  }
+
   float brightness = starIntensity * (0.5 + vRandom.z * 0.5);
-
   brightness *= 0.7 + 0.3 * sin(uTime * (4.0 + vRandom.w * 8.0) + vRandom.x * 6.28);
 
-  vec3 color = hsv2rgb(vec3(hue, saturation, min(brightness, 1.0)));
+  vec3 color = baseColor * min(brightness, 1.0);
 
-  float alpha = smoothstep(0.5, 0.05, dist) * min(brightness * 1.5, 1.0);
+  float alpha = smoothstep(0.5, 0.08, dist) * min(brightness * 1.2, 1.0);
 
-  gl_FragColor = vec4(color * 1.2, alpha);
+  gl_FragColor = vec4(color * 1.1, alpha);
 }
 `;
 
