@@ -2,112 +2,104 @@
 
 # Magic Particles 3D
 
-### *Estrellas que danzan en el vacío*
+### *Stars dancing in the void*
 
 <br>
 
-[![Three.js](https://img.shields.io/badge/Three.js-0.160-000000?style=for-the-badge&logo=threedotjs&logoColor=white)](https://threejs.org)
-[![WebGL](https://img.shields.io/badge/WebGL-1.0-990000?style=for-the-badge&logo=khronosgroup&logoColor=white)](https://www.khronos.org/webgl/)
-[![License](https://img.shields.io/badge/License-MIT-0080FF?style=for-the-badge)](LICENSE)
+<img src="./img/preview.jpg" alt="Magic Particles 3D preview" width="100%" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
 
 <br>
 
-Un sistema de partículas tridimensional donde 150 estrellas de ocho ramas siguen trayectorias armónicas en un espacio infinito. Cada estrella emite luz propia con una paleta de colores cuidadosamente calibrada, creando una experiencia visual que se siente viva.
-
-<br>
-
-<img src="https://via.placeholder.com/900x500/0a0a0f/ffffff?text=✨+Magic+Particles+3D" alt="Vista previa del sistema de partículas" width="100%" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
-
-<br>
+A three-dimensional particle system where 150 eight-pointed stars follow harmonic trajectories through infinite space. Each star emits its own light with a carefully calibrated color palette, creating a visual experience that feels alive.
 
 </div>
 
 ---
 
-## Índice
+## Table of Contents
 
-- [Visión general](#visión-general)
-- [Características](#características)
-- [Tecnologías](#tecnologías)
-- [Inicio rápido](#inicio-rápido)
-- [Controles](#controles)
-- [Arquitectura](#arquitectura)
-- [Personalización](#personalización)
-- [Rendimiento](#rendimiento)
-- [Licencia](#licencia)
-
----
-
-## Visión general
-
-Magic Particles 3D es una exploración visual del movimiento armónico aplicado a sistemas de partículas. El proyecto nació de una pregunta simple: *¿Qué sucede cuando las estrellas obedecen las leyes de la música?*
-
-Cada partícula es una estrella de ocho ramas — horizontal, vertical y diagonales — que se forma mediante cálculos matemáticos en el fragment shader. No hay texturas externas, no hay modelos predefinidos. Todo se genera en tiempo real usando únicamente la GPU.
-
-El resultado es un campo de estrellas que respira, que pulsa, que se mueve con una organicidad inesperada para algo generado enteramente por código.
+- [Overview](#overview)
+- [Features](#features)
+- [Technologies](#technologies)
+- [Quick Start](#quick-start)
+- [Controls](#controls)
+- [Architecture](#architecture)
+- [Customization](#customization)
+- [Performance](#performance)
+- [License](#license)
 
 ---
 
-## Características
+## Overview
 
-| Aspecto | Detalle |
-|:--------|:--------|
-| **Dimensionalidad** | Sistema completo en 3D con perspectiva y profundidad |
-| **Renderizado** | Shader GLSL personalizado ejecutado en GPU |
-| **Estrellas** | 8 ramas por estrella: 4 principales + 4 diagonales |
-| **Colores** | 5 tonos con distribución porcentual calibrada |
-| **Movimiento** | Trayectorias armónicas sinusoidales por eje |
-| **Efectos** | Glow suave, parpadeo temporal, blending aditivo |
-| **Interacción** | Navegación completa: rotación, paneo, zoom |
-| **Rendimiento** | Optimizado para 60fps en hardware integrado |
+Magic Particles 3D is a visual exploration of harmonic motion applied to particle systems. The project was born from a simple question: *What happens when stars obey the laws of music?*
 
-### Paleta de colores
+Each particle is an eight-pointed star — horizontal, vertical, and diagonal — generated through mathematical calculations in the fragment shader. No external textures, no predefined models. Everything is generated in real-time using only the GPU.
 
-La distribución de colores no es aleatoria. Cada porcentaje fue elegido para crear un balance visual que se sienta natural:
+The result is a star field that breathes, that pulses, that moves with an organicity unexpected for something generated entirely by code.
+
+---
+
+## Features
+
+| Aspect | Detail |
+|:-------|:-------|
+| **Dimensionality** | Full 3D system with perspective and depth |
+| **Rendering** | Custom GLSL shader running on the GPU |
+| **Stars** | 8 branches per star: 4 main + 4 diagonal |
+| **Colors** | 5 tones with calibrated percentage distribution |
+| **Movement** | Sinusoidal harmonic trajectories per axis |
+| **Effects** | Soft glow, temporal flickering, additive blending |
+| **Interaction** | Full navigation: rotation, panning, zoom |
+| **Performance** | Optimized for 60fps on integrated hardware |
+
+### Color Palette
+
+The color distribution is not random. Each percentage was chosen to create a visual balance that feels natural:
 
 ```
-Blanco puro       ████████████████████░░░░░░░░░░░░░░░░░░░░  45%
-Blanco cálido     ██████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  25%
-Azul suave        ██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  15%
-Naranja cálido    ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  10%
-Rojo tenue        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   5%
+Pure white        ████████████████████░░░░░░░░░░░░░░░░░░░░  45%
+Warm white        ██████████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  25%
+Soft blue         ██████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  15%
+Warm orange       ████░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░  10%
+Faint red         ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   5%
 ```
 
 ---
 
-## Tecnologías
+## Technologies
 
-| Tecnología | Uso | Por qué |
-|:-----------|:----|:--------|
-| **Three.js 0.160** | Motor de renderizado 3D | La bibliografía más madura para WebGL en JavaScript |
-| **GLSL** | Shaders de vértice y fragmento | Permite ejecutar cálculos complejos directamente en la GPU |
-| **OrbitControls** | Navegación de cámara | Interacción intuitiva sin código adicional |
-| **ES Modules** | Sistema de módulos | Importaciones nativas del navegador, sin bundler necesario |
+| Technology | Usage | Why |
+|:-----------|:------|:----|
+| **Three.js 0.160** | 3D rendering engine | The most mature library for WebGL in JavaScript |
+| **GLSL** | Vertex and fragment shaders | Allows running complex calculations directly on the GPU |
+| **OrbitControls** | Camera navigation | Intuitive interaction with no extra code |
+| **ES Modules** | Module system | Native browser imports, no bundler needed |
 
-No hay dependencias de build. No hay bundler. No hay transpilación. El código se ejecuta tal cual lo escribe el navegador.
+No build dependencies. No bundler. No transpilation. The code runs exactly as the browser reads it.
 
 ---
 
-## Inicio rápido
+## Quick Start
 
-### Requisitos
+### Requirements
 
-- Un navegador web actualizado
-- Un servidor local (por restricciones de ES Modules)
+- A modern web browser
+- A local server (due to ES Modules restrictions)
 
-### Instalación
+### Installation
 
 ```bash
-git clone https://github.com/tu-usuario/magic-particles-3d.git
+git clone https://github.com/your-user/magic-particles-3d.git
 cd magic-particles-3d
 ```
 
-### Ejecución
+### Running
 
-Cualquiera de estas opciones funciona:
+Any of these options work:
 
 ```bash
-# Python (instalado por defecto en la mayoría de sistemas)
+# Python (installed by default on most systems)
 python -m http.server 8000
 
 # Node.js
@@ -117,162 +109,162 @@ npx serve
 php -S localhost:8000
 ```
 
-Luego, abre `http://localhost:8000` en tu navegador.
+Then open `http://localhost:8000` in your browser.
 
-> **Nota:** No se recomienda abrir `index.html` directamente como archivo (`file://`), ya que los ES Modules requieren un servidor HTTP para funcionar correctamente.
+> **Note:** Opening `index.html` directly as a file (`file://`) is not recommended, as ES Modules require an HTTP server to function correctly.
 
 ---
 
-## Controles
+## Controls
 
-| Acción | Input |
+| Action | Input |
 |:-------|:------|
-| Rotar la escena | Click izquierdo + arrastrar |
-| Desplazar la cámara | Click derecho + arrastrar |
-| Acercar / alejar | Rueda del mouse |
-| Restablecer vista | Recargar la página |
+| Rotate the scene | Left click + drag |
+| Pan the camera | Right click + drag |
+| Zoom in / out | Mouse wheel |
+| Reset view | Reload the page |
 
 ---
 
-## Arquitectura
+## Architecture
 
-### Flujo de renderizado
+### Render Flow
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                     Cada frame                          │
+│                     Each frame                          │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
-│   1. Actualizar tiempo (uTime)                          │
+│   1. Update time (uTime)                                │
 │              ↓                                          │
-│   2. Vertex Shader: calcular posición 3D                │
-│      └─ Aplicar movimiento armónico sinusoidal          │
+│   2. Vertex Shader: calculate 3D position               │
+│      └─ Apply sinusoidal harmonic movement              │
 │              ↓                                          │
-│   3. Rasterizar puntos como quads                       │
+│   3. Rasterize points as quads                          │
 │              ↓                                          │
-│   4. Fragment Shader: dibujar estrella de 8 ramas       │
-│      ├─ Calcular distancia al centro                    │
-│      ├─ Calcular distancias a cada rama                 │
-│      ├─ Combinar intensidades                           │
-│      ├─ Seleccionar color según distribución            │
-│      └─ Aplicar glow y alpha                            │
+│   4. Fragment Shader: draw 8-pointed star               │
+│      ├─ Calculate distance to center                    │
+│      ├─ Calculate distances to each branch              │
+│      ├─ Combine intensities                             │
+│      ├─ Select color based on distribution              │
+│      └─ Apply glow and alpha                            │
 │              ↓                                          │
-│   5. Blending aditivo sobre framebuffer                 │
+│   5. Additive blending on framebuffer                   │
 │              ↓                                          │
-│   6. Mostrar en pantalla                                │
+│   6. Display on screen                                  │
 │                                                         │
 └─────────────────────────────────────────────────────────┘
 ```
 
-### Estructura del código
+### Code Structure
 
 ```
 magic-particles-3d/
-├── index.html        →  Punto de entrada, carga de módulos
-├── script.js         →  Escena, cámaras, shaders, animación
-├── style.css         →  Reset CSS, canvas a pantalla completa
-└── README.md         →  Este archivo
+├── index.html        →  Entry point, loads modules
+├── script.js         →  Scene, cameras, shaders, animation
+├── style.css         →  CSS reset, full-screen canvas
+└── README.md         →  This file
 ```
 
-El proyecto es intencionalmente minimalista. Un solo archivo JavaScript contiene toda la lógica, incluyendo los shaders GLSL como template literals. Esta decisión facilita la experimentación: un solo archivo para editar, un solo lugar donde busca todo.
+The project is intentionally minimalist. A single JavaScript file contains all the logic, including the GLSL shaders as template literals. This decision facilitates experimentation: one file to edit, one place to look for everything.
 
 ---
 
-## Personalización
+## Customization
 
-### Cantidad de partículas
+### Particle Count
 
 ```javascript
-const NB_PARTICLES = 150;  // Aumentar o reducir según necesidad
+const NB_PARTICLES = 150;  // Increase or decrease as needed
 ```
 
-> Más partículas significan más carga para la GPU. En hardware integrado, se recomienda mantener por debajo de 200.
+> More particles mean more GPU load. On integrated hardware, it is recommended to stay below 200.
 
-### Velocidad del movimiento
+### Movement Speed
 
-Los tres ejes se controlan independientemente en el vertex shader:
+The three axes are controlled independently in the vertex shader:
 
 ```glsl
 pos.y += sin(uTime * 0.5 + position.x * 0.1) * 1.0;  // Vertical
 pos.x += cos(uTime * 0.3 + position.y * 0.1) * 0.8;  // Horizontal
-pos.z += sin(uTime * 0.2 + position.z * 0.1) * 0.9;  // Profundidad
+pos.z += sin(uTime * 0.2 + position.z * 0.1) * 0.9;  // Depth
 //         ↑          ↑                   ↑
-//      Velocidad  Frecuencia         Amplitud
+//      Speed    Frequency         Amplitude
 ```
 
-### Colores
+### Colors
 
-La paleta se define en el fragment shader. Cada rango de `rand` controla la probabilidad de aparición:
+The palette is defined in the fragment shader. Each `rand` range controls the probability of appearance:
 
 ```glsl
-if (rand < 0.45)      baseColor = vec3(1.0, 1.0, 1.0);   // Blanco
-else if (rand < 0.70) baseColor = vec3(1.0, 0.96, 0.84); // Cálido
-else if (rand < 0.85) baseColor = vec3(0.66, 0.84, 1.0); // Azul
-else if (rand < 0.95) baseColor = vec3(1.0, 0.71, 0.42); // Naranja
-else                  baseColor = vec3(1.0, 0.48, 0.48); // Rojo
+if (rand < 0.45)      baseColor = vec3(1.0, 1.0, 1.0);   // White
+else if (rand < 0.70) baseColor = vec3(1.0, 0.96, 0.84); // Warm
+else if (rand < 0.85) baseColor = vec3(0.66, 0.84, 1.0); // Blue
+else if (rand < 0.95) baseColor = vec3(1.0, 0.71, 0.42); // Orange
+else                  baseColor = vec3(1.0, 0.48, 0.48); // Red
 ```
 
-### Tamaño de las estrellas
+### Star Size
 
 ```javascript
-sizes[i] = Math.random() * 40 + 20;  // Rango: 20px a 60px
+sizes[i] = Math.random() * 40 + 20;  // Range: 20px to 60px
 ```
 
-### Intensidad del glow
+### Glow Intensity
 
-El efecto de halo se controla con el divisor en el fragment shader:
+The halo effect is controlled by the divisor in the fragment shader:
 
 ```glsl
 float starIntensity = 1.0 / (dist * 200.0 + 0.02);
 //                                     ↑
-//                    Mayor valor = glow más pequeño
-//                    Menor valor = glow más grande
+//                    Higher value = smaller glow
+//                    Lower value = larger glow
 ```
 
 ---
 
-## Rendimiento
+## Performance
 
-El proyecto está optimizado para mantener 60fps en la mayoría de hardware:
+The project is optimized to maintain 60fps on most hardware:
 
-| Factor | Optimización |
+| Factor | Optimization |
 |:-------|:-------------|
-| **GPU-bound** | Todos los cálculos pesados se ejecutan en el shader, no en CPU |
-| **Sin texturas** | No hay carga de assets ni sampling de texturas |
-| **Sin geometría compleja** | Solo Points con shader, no meshes triangulados |
-| **Blending aditivo** | Menos overhead que blending alpha tradicional |
-| **Sin deep copy** | Solo se actualiza la uniform `uTime` cada frame |
+| **GPU-bound** | All heavy calculations run in the shader, not on CPU |
+| **No textures** | No asset loading or texture sampling |
+| **No complex geometry** | Only Points with shaders, no triangulated meshes |
+| **Additive blending** | Less overhead than traditional alpha blending |
+| **No deep copy** | Only the `uTime` uniform is updated each frame |
 
-### Benchmarks referenciales
+### Reference Benchmarks
 
-| Hardware | FPS estimado |
-|:---------|:-------------|
-| GPU dedicada (GTX 1060 o superior) | 60 fps constantes |
-| GPU integrada (Intel UHD 620) | 55-60 fps |
-| MacBook Air (M1) | 60 fps constantes |
-| Móvil moderno (2022+) | 45-60 fps |
-
----
-
-## Decisiones técnicas
-
-**¿Por qué Points en lugar de instanced meshes?**
-
-Las estrellas son esencialmente quads que siempre miran a la cámara. Los Points son la abstracción más eficiente para este caso: un solo draw call, un solo buffer de geometría, y el tamaño se controla directamente en el vertex shader.
-
-**¿Por qué no usar un post-processor para el glow?**
-
-El glow se logra matemáticamente en el fragment shader usando una función de atenuación inversa. Esto evita un render pass adicional y mantiene el pipeline simple.
-
-**¿Por qué ES Modules sin bundler?**
-
-Para eliminar fricción. No hay `npm install`, no hay configuración de webpack, no hay build step. El código se modifica y se recarga. Esto es ideal para experimentación y aprendizaje.
+| Hardware | Estimated FPS |
+|:---------|:--------------|
+| Dedicated GPU (GTX 1060 or higher) | Constant 60 fps |
+| Integrated GPU (Intel UHD 620) | 55-60 fps |
+| MacBook Air (M1) | Constant 60 fps |
+| Modern mobile (2022+) | 45-60 fps |
 
 ---
 
-## Licencia
+## Technical Decisions
 
- Este proyecto se distribuye bajo la licencia MIT. Consulta el archivo [LICENSE](LICENSE) para más detalles.
+**Why Points instead of instanced meshes?**
+
+Stars are essentially quads that always face the camera. Points are the most efficient abstraction for this use case: a single draw call, a single geometry buffer, and the size is controlled directly in the vertex shader.
+
+**Why not use a post-processor for the glow?**
+
+The glow is achieved mathematically in the fragment shader using an inverse attenuation function. This avoids an additional render pass and keeps the pipeline simple.
+
+**Why ES Modules without a bundler?**
+
+To eliminate friction. No `npm install`, no webpack configuration, no build step. The code is modified and reloaded. This is ideal for experimentation and learning.
+
+---
+
+## License
+
+This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ```
 MIT License - 2024
@@ -282,6 +274,8 @@ MIT License - 2024
 
 <div align="center">
 
-*Generado con Three.js y curiosidad*
+*Built with Three.js and curiosity*
+</br>
+Made with ❤️ by <a href="https://sebas-dev.vercel.app/" target="_blank" rel="noopener noreferrer">Sebastián V</a>
 
 </div>
