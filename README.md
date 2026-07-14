@@ -1,4 +1,5 @@
-<div align="center">
+<img src="./img/preview.jpg" alt="Magic Particles 3D preview" width="100%" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
+<div>
 
 # Magic Particles 3D
 
@@ -6,7 +7,6 @@
 
 <br>
 
-<img src="./img/preview.jpg" alt="Magic Particles 3D preview" width="100%" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);">
 
 <br>
 
@@ -276,6 +276,6 @@ MIT License - 2024
 
 *Built with Three.js and curiosity*
 </br>
-Made with ❤️ by <a href="https://sebas-dev.vercel.app/" target="_blank" rel="noopener noreferrer">Sebastián V</a>
+Made with ❤️ by <a href="https://sebas-dev.vercel.app/" target="_blank" rel="noopener noreferrer">Sebastián V.</a>
 
 </div>
