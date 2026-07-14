@@ -5,8 +5,6 @@
 
 ### *Stars dancing in the void*
 
-<br>
-
 
 <br>
 
@@ -267,7 +265,7 @@ To eliminate friction. No `npm install`, no webpack configuration, no build step
 This project is distributed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 ```
-MIT License - 2024
+MIT License - 2026
 ```
 
 ---
